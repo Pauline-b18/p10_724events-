@@ -30,13 +30,25 @@ export const DataProvider = ({ children }) => {
     if (data) return;
     getData();
   });
+
+  // On définit la variable events, utilisée pour stocker la liste des événements
+  const events = data?.events;
+
+  // On trie les événements par date (du plus récent au plus ancien)
+  const sortEvents = events?.sort((evtA, evtB) => 
+    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1);
   
+  // La variable last contiendra l'événement le plus récent réalisé (index 0)
+  const last = sortEvents?.[0];
+
   return (
     <DataContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         data,
         error,
+        // Ajout de la variable last au contexte pour utilisation globale
+        last,
       }}
     >
       {children}
