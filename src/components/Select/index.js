@@ -13,14 +13,15 @@ const Select = ({
   label,
   type = "normal",
 }) => {
-  const [value, setValue] = useState();
-  const [collapsed, setCollapsed] = useState(true);
+  const [value, setValue] = useState(); // État pour la valeur sélectionnée
+  const [collapsed, setCollapsed] = useState(true); // État pour gérer l'affichage déroulant
 
+  // Fonction pour gérer la mise à jour de la valeur sélectionnée
   const changeValue = (newValue) => {
-    // Ajout nouvelle valeur dans le onChange pour la faire remonter au composant Events
+    // Appel de la fonction onChange pour remonter la nouvelle valeur au composant parent
     onChange(newValue);
-    setValue(newValue);
-    setCollapsed(newValue);
+    setValue(newValue); // Mise à jour de la valeur sélectionnée
+    setCollapsed(newValue); // Fermeture du menu déroulant après sélection
   };
 
   return (
@@ -86,7 +87,7 @@ const Arrow = () => (
 
 Select.propTypes = {
   selection: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func, // Fonction appelée lors d'un changement de sélection
   name: PropTypes.string,
   titleEmpty: PropTypes.bool,
   label: PropTypes.string,
@@ -94,7 +95,7 @@ Select.propTypes = {
 };
 
 Select.defaultProps = {
-  onChange: () => null,
+  onChange: () => null, // Fonction par défaut pour onChange (ne fait rien)
   titleEmpty: false,
   label: "",
   type: "normal",

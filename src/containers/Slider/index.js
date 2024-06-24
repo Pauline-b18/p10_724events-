@@ -31,7 +31,7 @@ const Slider = () => {
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        // Suppression de la balise fragment inutile (<> </>)
+        // Suppression de la balise inutile (<> </>)
         <div
           key={event.title}
           className={`SlideCard SlideCard--${
