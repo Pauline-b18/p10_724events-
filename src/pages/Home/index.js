@@ -120,13 +120,16 @@ const Page = () => {
         <div className="col presta">
           <h3>Notre dernière prestation</h3>
           {/* Utilisation du composant EventCard pour afficher l'événement le plus récent */}
-          <EventCard
-            imageSrc={last?.cover}
-            title={last?.title}
-            date={new Date(last?.date)}
-            small
-            label={last?.type || "Événement"}
-          />
+           {/* on vérifie si la variable last est défini avec un conditionnel */}
+           {last && (
+            <EventCard
+              imageSrc={last?.cover}
+              title={last?.title}
+              date={new Date(last?.date)}
+              small
+              label={last?.type || "Événement"}
+            />
+           )}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>
