@@ -3,42 +3,43 @@ import Field, { FIELD_TYPES } from "./index";
 
 describe("When a field is created", () => {
   it("a name is set on the field", () => {
-    render(<Field name="field-name" />);
+    // Ajout des props onChange et value avec des valeurs par défaut
+    render(<Field name="field-name" onChange={() => {}} value="" />);
     const fieldElement = screen.getByTestId("field-testid");
     expect(fieldElement).toBeInTheDocument();
     expect(fieldElement.name).toEqual("field-name");
   });
+
   it("a placeholder is set on the field", () => {
-    render(<Field placeholder="field-placeholder" name="test" />);
+    // Ajout onChange et value
+    render(<Field placeholder="field-placeholder" name="test" onChange={() => {}} value="" />);
     const fieldElement = screen.getByTestId("field-testid");
     expect(fieldElement.placeholder).toEqual("field-placeholder");
   });
 
   it("a label is set with field", () => {
-    render(<Field placeholder="field-placeholder" label="field_label" name="test" />);
+    // Ajout onChange et value
+    render(<Field placeholder="field-placeholder" label="field_label" name="test" onChange={() => {}} value="" />);
     const labelElement = screen.getByText(/field_label/);
     expect(labelElement).toBeInTheDocument();
   });
 
-  describe("and its valued changed", () => {
-    it("a onChange value is executed", () => {
+  describe("and its value changed", () => {
+    it("the onChange handler is executed", () => {
       const onChange = jest.fn();
-      render(<Field onChange={onChange} name="test" />);
+      render(<Field onChange={onChange} name="test" value="" />);
       const fieldElement = screen.getByTestId("field-testid");
-      fireEvent(
-        fieldElement,
-        new MouseEvent("click", {
-          bubbles: true,
-          cancelable: true,
-        })
-      );
+      // J'utilise fireEvent.change pour simuler un changement de valeur
+      fireEvent.change(fieldElement, { target: { value: 'new value' } });
+      expect(onChange).toHaveBeenCalled();
     });
   });
 
   describe("and its type is set to FIELD_TYPES.INPUT_TEXT", () => {
     it("a text input is rendered", () => {
       window.console.error = jest.fn().mockImplementation(() => null); // disable propTypes warning
-      render(<Field type={FIELD_TYPES.INPUT_TEXT} name="test" />);
+      // Ajout onChange et value
+      render(<Field type={FIELD_TYPES.INPUT_TEXT} name="test" onChange={() => {}} value="" />);
       const fieldElement = screen.getByTestId("field-testid");
       expect(fieldElement.type).toEqual("text");
     });
@@ -47,16 +48,19 @@ describe("When a field is created", () => {
   describe("and its type is set to FIELD_TYPES.TEXTAREA", () => {
     it("a textarea is rendered", () => {
       window.console.error = jest.fn().mockImplementation(() => null); // disable propTypes warning
-      render(<Field type={FIELD_TYPES.TEXTAREA} name="test" />);
+      // Ajout onChange et value
+      render(<Field type={FIELD_TYPES.TEXTAREA} name="test" onChange={() => {}} value="" />);
       const fieldElement = screen.getByTestId("field-testid");
-      expect(fieldElement.type).toEqual("textarea");
+      // On vérifie que le tagName est textarea
+      expect(fieldElement.tagName.toLowerCase()).toEqual("textarea");
     });
   });
 
   describe("and its type is set to a wrong value", () => {
     it("a text input is rendered", () => {
       window.console.error = jest.fn().mockImplementation(() => null); // disable propTypes warning
-      render(<Field type="wrong-type" name="test" />);
+      // Ajout onChange et value
+      render(<Field type="wrong-type" name="test" onChange={() => {}} value="" />);
       const fieldElement = screen.getByTestId("field-testid");
       expect(fieldElement.type).toEqual("text");
     });
